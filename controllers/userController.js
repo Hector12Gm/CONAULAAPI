@@ -3,7 +3,7 @@ var usersModel = require('../models/usersModel');
 var bcrypt = require("bcrypt-nodejs");
 var jwtService = require('../services/jwt');
 var usersController = () => {}
-const IMGDEFAULT = "./uploads/default.jpg";
+const IMGDEFAULT = "./uploads/default.png";
 
 usersController.newUser = (req, res) => {
 
@@ -23,9 +23,9 @@ usersController.newUser = (req, res) => {
                     res.status(404).send({ message: err });
                 } else {
                     if (rows.affectedRows > 0) {
-                        res.status(200).send({ data: rows });
+                        return res.status(200).send({ data: "Se inserto" });
                     } else {
-                        res.status(500).send({ message: err });
+                        return res.status(500).send({ message: err });
                     }
                 }
             });
@@ -67,6 +67,5 @@ usersController.loginUser = (req, res) => {
 
 
 }
-
 
 module.exports = usersController;

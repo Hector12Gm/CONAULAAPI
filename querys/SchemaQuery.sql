@@ -21,5 +21,6 @@ Create table miembrosGrupo(
 id_miembro char(50) primary key,
 nombre_usuario char(50) not null,
 id_grupo char(50) not null,
+tipo int,
 foreign key  (nombre_usuario) references usuarios(nombre_usuario),
 foreign key  (id_grupo) references grupos(id_grupo));
