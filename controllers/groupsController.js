@@ -9,6 +9,7 @@ const NORMAL = 0;
 groupsController.newGroup = (req, res) => {
 
     if (!req.body.nombre_grupo) return res.status(400).send({ message: "Peticion no correcta" });
+
     let grupo = {
         id_grupo: generador.generar(10),
         nombre: req.body.nombre_grupo,
@@ -55,6 +56,27 @@ groupsController.getAll = (req, res) => {
         } else {
             return res.status(500).send({ message: "No hay grupo disponibles" });
         }
+    });
+};
+
+groupsController.getOne = (req, res) => {
+    if (!req.params.id_grupo) return res.status(400).send({ message: "Peticion incoreccta" });
+
+    groupsModel.selectOne([req.params.id_grupo], (err, row) => {
+        if (err) return res.status(500).send({ message: "Error fatal" });
+        if (row.length > 0) {
+            let grupo = row[0];
+            return res.status(200).send({ grupo: grupo, miembro: req.miembro });
+        } else {
+            return res.status(500).send({ message: "El grupo no existe" });
+        }
+    });
+}
+groupsController.getAllU = (req, res) => {
+    let nombre_usuario = req.user.sub;
+    groupsModel.getAllU([nombre_usuario], (err, rows) => {
+        if (err) return res.status(500).send({ message: "Error al selecionar" });
+        return res.status(200).send({ grupos: rows });
     });
 };
 module.exports = groupsController;

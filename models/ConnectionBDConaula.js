@@ -11,6 +11,7 @@ var dbOptions = {
 var myconnection = mysql.createConnection(dbOptions);
 myconnection.connect((err) => {
     if (err) {
+        console.log(err);
         console.log("Error a al conectar con mysql");
     }
     else {

@@ -12,4 +12,11 @@ user.insert = (data, cb) => {
 user.login = (data, cb) => {
     connection.query("Select * from usuarios where nombre_usuario = ?", data, cb);
 }
+user.update = (data, cb) => {
+    connection.query('Update  usuarios set nombre=?,apellidos=? where nombre_usuario=?', data, cb);
+};
+user.updateImg = (data, cb) => {
+    connection.query("Update usuarios set img=? where nombre_usuario=?", data, cb);
+}
+
 module.exports = user;

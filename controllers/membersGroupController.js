@@ -23,11 +23,11 @@ membersController.joinGroup = (req, res) => {
             membersModel.new([miembro.id_miembro,
                 miembro.nombre_usuario, miembro.id_grupo, miembro.tipo
             ], (err, rows) => {
-                if (err) return res.status(500).send({ message: err });
+                if (err) return res.status(500).send({ message: "Error fatal checa tu conexion" });
                 if (rows.affectedRows > 0) {
                     return res.status(200).send({ miembro });
                 } else {
-                    return res.status(500).send({ message: "No se inserto" });
+                    return res.status(500).send({ message: "Ocurrio un error al unirte" });
                 }
             });
 

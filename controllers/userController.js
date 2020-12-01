@@ -3,7 +3,9 @@ var usersModel = require('../models/usersModel');
 var bcrypt = require("bcrypt-nodejs");
 var jwtService = require('../services/jwt');
 var usersController = () => {}
-const IMGDEFAULT = "./uploads/default.png";
+const IMGDEFAULT = "http://localhost:3000/default.png";
+var constantes = require('../middlewares/constantesConaula');
+var path = require('path');
 
 usersController.newUser = (req, res) => {
 
@@ -64,8 +66,21 @@ usersController.loginUser = (req, res) => {
             return res.status(404).send({ message: "El usaurio no se ha podido(nombre de usuairo)" });;
         }
     });
-
-
 }
+usersController.updateImg = (req, res) => {
+    if (!(req.file)) return res.status(400).send({ message: "Peticion incorrecta" });
+    let extencion = (path.extname(req.file.filename)).toLocaleLowerCase();
 
+    let rutaFn = constantes.ip + req.file.filename;
+
+    usersModel.updateImg([rutaFn, req.params.nombre_usuario], (err, rows) => {
+        if (err) return res.status(500).send({ message: "Error al actualizar la imagen de usuario" });
+        if (rows.affectedRows > 0) {
+            return res.status(200).send({ url: rutaFn });
+        } else {
+
+            return res.status(500).send({ message: "Peticion no se actualizo tu imagen de usuario" });
+        }
+    });
+}
 module.exports = usersController;

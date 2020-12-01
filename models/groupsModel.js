@@ -9,10 +9,19 @@ groups.validate = (data, cb) => {
 };
 
 groups.selectAll = (data, cb) => {
-    connection.query("Select * from grupos where nombre_usuario=?", data, cb);
+    connection.query("Select grupos.id_grupo,grupos.nombre from grupos" +
+        " inner join miembrosgrupo on miembrosgrupo.id_grupo=grupos.id_grupo " +
+        " where miembrosgrupo.nombre_usuario=?", data, cb);
 };
 
+groups.selectOne = (data, cb) => {
+    connection.query('select * from grupos where id_grupo=?', data, cb);
+}
 groups.delete = (data, cb) => {
     connection.query("Delete from grupos where id_grupo=?", data, cb);
 }
+
+groups.selectAllU = (data, cb) => {
+    connection.query('Select * from grupos where nombre_usuario=?', data, cb);
+};
 module.exports = groups;

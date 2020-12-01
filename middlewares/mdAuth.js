@@ -16,7 +16,7 @@ exports.ensureAuth = (req, res, next) => {
         req.user = payload;
         next();
     } catch (ex) {
-        return res.status(404).send({ message: ex });
+        return res.status(404).send({ message: "Error" });
     }
 
 }
